@@ -1,0 +1,30 @@
+services:
+  # Service to build ownCloud from source
+  build-owncloud:
+    build:
+      dockerfile: owncloud_build/Dockerfile
+    container_name: owncloud_build
+    restart: no
+    volumes:
+      - ./owncloud:/var/www/owncloud
+
+  owncloud:
+    build:
+      dockerfile: owncloud_docker/Dockerfile
+      args:
+        OWNCLOUD_DOMAIN: <domain dùng để truy cập trên trình duyệt>
+        OWNCLOUD_IP: <ip dùng để truy cập trên trình duyệt>
+        DB_TYPE: <mysql/pgsql>
+        DB_NAME: <ten db đã tạo>
+        DB_USER: <tên user db đã tạo>
+        DB_PASS: <pass của user>
+        DB_HOST: <host của db>
+        DB_PORT: <port của db>
+        ADMIN_USER: <username admin mặc định owncloud>
+        ADMIN_PASS: <password admin mặc định owncloud>
+    container_name: owncloud_server
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./owncloud:/var/www/owncloud
