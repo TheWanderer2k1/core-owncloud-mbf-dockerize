@@ -115,9 +115,6 @@ RUN echo "ServerName ${OWNCLOUD_DOMAIN}" >> /etc/apache2/apache2.conf
 
 RUN apache2ctl -k restart
 
-# Install PostgreSQL client
-# RUN apt install -y postgresql-client
-
 # Create entrypoint script
 RUN echo '#!/bin/bash\n\
 set -e\n\
@@ -163,8 +160,19 @@ RUN echo '/var/www/owncloud/data/owncloud.log {\n\
     compresscmd /bin/gzip\n\
 }' > /etc/logrotate.d/owncloud
 
+WORKDIR ${OWNCLOUD_DIR}
+
+# add marketplace app
+RUN wget https://github.com/owncloud/market/releases/download/v0.9.0/market-0.9.0.tar.gz && \
+    tar -xvf market-0.9.0.tar.gz -C apps/ && \
+    rm market-0.9.0.tar.gz
+
+# add s3 primary storage app
+RUN wget https://github.com/owncloud/files_primary_s3/releases/download/v1.6.0/files_primary_s3-1.6.0.tar.gz && \
+    tar -xvf files_primary_s3-1.6.0.tar.gz -C apps/ && \
+    rm files_primary_s3-1.6.0.tar.gz
+
 # Expose port
 EXPOSE 80
 
-WORKDIR ${OWNCLOUD_DIR}
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
