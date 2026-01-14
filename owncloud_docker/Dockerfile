@@ -119,6 +119,26 @@ RUN apache2ctl -k restart
 RUN echo '#!/bin/bash\n\
 set -e\n\
 \n\
+# Install ownCloud marketplace if not already installed\n\
+if [ -d /var/www/owncloud/apps/market ]; then\n\
+ echo "ownCloud marketplace app is already installed."\n\
+else\n\
+ echo "Install marketplace..."\n\
+ wget https://github.com/owncloud/market/releases/download/v0.9.0/market-0.9.0.tar.gz && \
+    tar -xvf market-0.9.0.tar.gz -C /var/www/owncloud/apps/ && \
+    rm market-0.9.0.tar.gz\n\
+fi\n\
+\n\
+# Install ownCloud S3 primary storage app if not already installed\n\\
+if [ -d /var/www/owncloud/apps/files_primary_s3 ]; then\n\
+ echo "ownCloud S3 primary storage app is already installed."\n\
+else\n\
+ echo "Install s3 primary storage app..."\n\
+ wget https://github.com/owncloud/files_primary_s3/releases/download/v1.6.0/files_primary_s3-1.6.0.tar.gz && \
+    tar -xvf files_primary_s3-1.6.0.tar.gz -C /var/www/owncloud/apps/ && \
+    rm files_primary_s3-1.6.0.tar.gz\n\
+fi\n\
+\n\
 # Install ownCloud if not already installed\n\
 if [ ! -f /var/www/owncloud/config/config.php ]; then\n\
  echo "Installing ownCloud..."\n\
@@ -160,16 +180,6 @@ RUN echo '/var/www/owncloud/data/owncloud.log {\n\
 }' > /etc/logrotate.d/owncloud
 
 WORKDIR ${OWNCLOUD_DIR}
-
-# add marketplace app
-RUN wget https://github.com/owncloud/market/releases/download/v0.9.0/market-0.9.0.tar.gz && \
-    tar -xvf market-0.9.0.tar.gz -C apps/ && \
-    rm market-0.9.0.tar.gz
-
-# add s3 primary storage app
-RUN wget https://github.com/owncloud/files_primary_s3/releases/download/v1.6.0/files_primary_s3-1.6.0.tar.gz && \
-    tar -xvf files_primary_s3-1.6.0.tar.gz -C apps/ && \
-    rm files_primary_s3-1.6.0.tar.gz
 
 # Expose port
 EXPOSE 80
