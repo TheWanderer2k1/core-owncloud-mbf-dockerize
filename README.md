@@ -26,8 +26,8 @@ docker build \
 --build-arg DB_PASS=<pass của user> \
 --build-arg DB_HOST=<host của db> \
 --build-arg DB_PORT=<port của db> \
---build-arg ADMIN_USER: <username admin mặc định owncloud> \
---build-arg ADMIN_PASS: <password admin mặc định owncloud> \
+--build-arg ADMIN_USER=<username admin mặc định owncloud> \
+--build-arg ADMIN_PASS=<password admin mặc định owncloud> \
 -t mobidrive-image .
 
 docker run -d --name mobidrive mobidrive-image
