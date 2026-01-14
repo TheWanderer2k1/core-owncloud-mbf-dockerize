@@ -122,7 +122,6 @@ set -e\n\
 # Install ownCloud if not already installed\n\
 if [ ! -f /var/www/owncloud/config/config.php ]; then\n\
  echo "Installing ownCloud..."\n\
- echo "$DB_USER $DB_PASS"\n\
  /var/www/owncloud/occ maintenance:install \\\n\
         --database "$DB_TYPE" \\\n\
         --database-name "$DB_NAME" \\\n\
