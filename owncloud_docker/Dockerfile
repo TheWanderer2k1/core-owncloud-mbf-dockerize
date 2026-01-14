@@ -138,9 +138,9 @@ if [ ! -f /var/www/owncloud/config/config.php ]; then\n\
  /var/www/owncloud/occ config:system:set trusted_domains 2 --value="$OWNCLOUD_DOMAIN" \n\
  /var/www/owncloud/occ config:system:set trusted_domains 3 --value="localhost" \n\
  \n\
- echo "ownCloud installation completed!"\n\
+ echo "ownCloud installation completed! Please wait for Apache to start..."\n\
 else\n\
- echo "ownCloud is already installed."\n\
+ echo "ownCloud is already installed. Please wait for Apache to start..."\n\
 fi\n\
 \n\
 # Make sure the permissions are correct\n\

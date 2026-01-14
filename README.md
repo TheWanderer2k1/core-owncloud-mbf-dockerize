@@ -7,6 +7,8 @@ docker run -d \
   -p 5432:5432 \
   postgres:16-alpine
 
+docker exec -it mobidrive-postgres psql -U hoanganh -d mobidrive -c "GRANT ALL ON SCHEMA public TO hoanganh; GRANT ALL ON SCHEMA public TO public; ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO hoanganh; ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO hoanganh;"
+
 ### Clone code
 git clone https://github.com/TheWanderer2k1/core-owncloud-mbf.git owncloud
 
@@ -30,6 +32,6 @@ docker build \
 --build-arg ADMIN_PASS=<password admin mặc định owncloud> \
 -t mobidrive-image .
 
-docker run -d --name mobidrive mobidrive-image
+docker run -d -p 80:80 --name mobidrive mobidrive-image:latest
 
         
