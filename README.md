@@ -16,7 +16,7 @@ git clone https://github.com/TheWanderer2k1/core-owncloud-mbf.git owncloud
 docker compose run --rm build-owncloud
 
 ### Run owncloud
-docker compose up owncloud
+docker compose up -d owncloud
 
 ### Run all in one dockerfile
 docker build \
