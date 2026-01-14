@@ -61,11 +61,8 @@ WORKDIR /var/www
 
 RUN git clone https://github.com/TheWanderer2k1/core-owncloud-mbf.git owncloud 
 
-# Set working directory
-WORKDIR /var/www/owncloud
-
-# Set entrypoint
-ENTRYPOINT ["/usr/local/bin/builder-entrypoint.sh"]
+# Run build
+RUN /usr/local/bin/builder-entrypoint.sh
 
 FROM ubuntu:22.04 AS owncloud
 
